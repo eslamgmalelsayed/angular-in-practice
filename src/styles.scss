@@ -5,14 +5,48 @@
   box-sizing: border-box;
 }
 
+html, body { 
+  height: 100%; 
+}
+
 body { 
-    font-family: 'Roboto', sans-serif;
-    background-color: #2d2d2d;
-    color: #ffffff;
-    line-height: 1.5;
-    font-size: 16px;
-    font-weight: 400;
-    text-rendering: optimizeLegibility;
-    text-align: center;
-    padding: 20px;
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #212121; /* Dark blue background */
+  color: #ffffff; /* White text */
+}
+
+/* Make Material components work well with dark blue background */
+.mat-mdc-form-field {
+  .mat-mdc-text-field-wrapper {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .mdc-text-field--outlined .mdc-notched-outline__leading,
+  .mdc-text-field--outlined .mdc-notched-outline__notch,
+  .mdc-text-field--outlined .mdc-notched-outline__trailing {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+  }
+  
+  .mdc-text-field--focused .mdc-notched-outline__leading,
+  .mdc-text-field--focused .mdc-notched-outline__notch,
+  .mdc-text-field--focused .mdc-notched-outline__trailing {
+    border-color: #3f51b5 !important;
+  }
+  
+  .mdc-text-field--outlined .mdc-text-field__input {
+    color: #ffffff !important;
+  }
+  
+  .mat-mdc-form-field-label {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+  
+  .mat-mdc-form-field-label.mdc-floating-label--float-above {
+    color: #3f51b5 !important;
+  }
+  
+  .mat-icon {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
 }
