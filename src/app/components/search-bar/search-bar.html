@@ -1,16 +1,22 @@
 <div class="search-container">
-  <h1 class="search-title">{{ title }}</h1>
-  <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline" class="search-field">
+  <h1 class="search-title">{{ label }}</h1>
+  <form class="search-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="search-field">
       <mat-label>{{ label }}</mat-label>
-      <input matInput [formControl]="searchQuery" placeholder="Search for movies..." />
+      <input
+        matInput
+        formControlName="searchQuery"
+        placeholder="Search for movies..."
+        appTrim
+      />
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
-    <button 
-    matButton="outlined"
-      color="primary" 
+    <button
+      mat-raised-button
+      color="primary"
       type="submit"
-      class="search-button">
+      class="search-button"
+    >
       Search
     </button>
   </form>

@@ -14,18 +14,42 @@
 }
 
 .search-form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
   align-items: flex-start;
 }
 
 .search-field {
-  flex: 1;
-  width: 300px;
+  width: 100%;
+  background: transparent;
+
+  .mat-form-field-flex {
+    background: #232323;
+    border-radius: 8px;
+  }
+
+  .mat-input-element {
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 12px 14px;
+  }
+
+  .mat-form-field-label {
+    color: #aaa !important;
+    font-size: 1rem;
+  }
+
+  .mat-form-field-outline {
+    color: #666;
+    border-radius: 8px;
+  }
 }
 
 .search-button {
-  height: 56px; // Match the height of mat-form-field
+  height: 56px;
   min-width: 120px;
   font-weight: 600;
 }
@@ -50,5 +74,21 @@
   .search-button {
     height: 48px;
     width: 100%;
+  }
+}
+
+// Error snackbar styling
+::ng-deep .error-snackbar {
+  --mat-snack-bar-container-color: #f44336 !important;
+  --mat-snack-bar-supporting-text-color: white !important;
+  
+  .mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+  
+  .mat-mdc-snack-bar-action {
+    --mat-mdc-snack-bar-action-color: white !important;
+    color: white !important;
   }
 }

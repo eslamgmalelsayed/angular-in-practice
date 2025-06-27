@@ -1,0 +1,22 @@
+<main class="main">
+  <app-search-bar (onSearch)="onMovieSearch($event)"></app-search-bar>
+
+  <!-- Loading state with spinner -->
+  <div *ngIf="isLoading" class="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Searching for movies...</p>
+  </div>
+
+  <!-- Movie results -->
+  <div class="movies-grid-container">
+    <div *ngIf="!isLoading && movies.length > 0" class="movies-grid">
+      <app-movie-card *ngFor="let movie of movies" [movie]="movie">
+      </app-movie-card>
+    </div>
+  </div>
+
+  <!-- No results -->
+  <div *ngIf="!isLoading && movies.length === 0" class="no-results">
+    <p>No movies found. Try searching for something!</p>
+  </div>
+</main>

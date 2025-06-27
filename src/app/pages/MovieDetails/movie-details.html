@@ -1,0 +1,48 @@
+<div class="movie-details" *ngIf="movie">
+  <div class="details-card">
+    <div class="details-header">
+      <span class="movie-year-actors">
+        {{ movie["#YEAR"] }} • {{ movie["#ACTORS"] }}
+      </span>
+    </div>
+    <div class="details-content">
+      <div class="poster-col">
+        <img
+          [src]="movie['#IMG_POSTER']"
+          [alt]="movie['#TITLE']"
+          class="movie-poster-large"
+        />
+      </div>
+      <div class="info-col">
+        <h2 class="movie-title">{{ movie["#TITLE"] }}</h2>
+        <div class="info-row">
+          <span class="label">Alternative Title:</span>
+          <span>{{ movie["#AKA"] }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">IMDB Rank:</span>
+          <span>#{{ movie["#RANK"] }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Cast:</span>
+          <span>{{ movie["#ACTORS"] }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Dimensions:</span>
+          <span>{{ movie.photo_width }} x {{ movie.photo_height }}</span>
+        </div>
+        <div class="actions">
+          <a
+            [href]="movie['#IMDB_URL']"
+            target="_blank"
+            mat-raised-button
+            color="primary"
+            class="imdb-btn"
+          >
+            View on IMDB
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

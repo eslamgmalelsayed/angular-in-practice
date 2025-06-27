@@ -1,0 +1,47 @@
+<mat-card class="movie-card">
+  <div class="image-container">
+    <!-- Skeleton loader -->
+    <div *ngIf="imageLoading" class="skeleton-loader"></div>
+
+    <!-- Movie poster -->
+    <img
+      *ngIf="!imageError"
+      [src]="movie['#IMG_POSTER']"
+      [alt]="movie['#TITLE']"
+      class="movie-poster"
+      [class.hidden]="imageLoading"
+      loading="lazy"
+      (load)="onImageLoad()"
+      (error)="onImageError()"
+    />
+
+    <!-- Fallback when image fails to load -->
+    <div *ngIf="imageError" class="image-fallback">
+      <mat-icon>movie</mat-icon>
+      <p>Image not available</p>
+    </div>
+
+    <!-- Overlay for better text readability -->
+    <div class="overlay"></div>
+
+    <!-- Year badge -->
+    <div class="year-badge">{{ movie["#YEAR"] }}</div>
+  </div>
+
+  <div class="card-content">
+    <h3 class="movie-title">{{ movie["#TITLE"] }}</h3>
+    <p class="movie-actors">{{ movie["#ACTORS"] }}</p>
+    <p class="movie-rank" *ngIf="movie['#RANK']">Rank #{{ movie["#RANK"] }}</p>
+  </div>
+
+  <mat-card-actions class="card-actions">
+    <button
+      (click)="onCardClick()"
+      mat-raised-button
+      color="primary"
+      class="view-details-btn"
+    >
+      View Details
+    </button>
+  </mat-card-actions>
+</mat-card>
