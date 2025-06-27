@@ -2,6 +2,8 @@
 
 A modern Angular application for searching and exploring movies with a beautiful, responsive interface.
 
+## ✨ Demo https://movie-searchhh-app.netlify.app/
+
 ## ✨ Features
 
 - **🔍 Movie Search**: Search for movies using a powerful API
