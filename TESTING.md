@@ -1,36 +1,34 @@
 # Testing Guide for Angular Movie Search App
 
-This guide covers both **Unit Testing** and **End-to-End (E2E) Testing** for the Angular Movie Search application.
+This guide covers **End-to-End (E2E) Testing**, **Code Quality**, and **Formatting** for the Angular Movie Search application.
 
 ## Table of Contents
 
-1. [Unit Testing with Jasmine & Karma](#unit-testing)
-2. [End-to-End Testing with Cypress](#e2e-testing)
+1. [End-to-End Testing with Cypress](#e2e-testing)
+2. [Code Quality & Formatting](#code-quality)
 3. [Testing Commands](#testing-commands)
 4. [Test Structure & Best Practices](#best-practices)
 5. [Continuous Integration](#ci)
 
-## Unit Testing
+## Code Quality & Formatting
 
 ### Overview
 
-Unit tests are written using **Jasmine** testing framework and run with **Karma** test runner. They test individual components, services, and functions in isolation.
+The project uses **ESLint** for code quality and **Prettier** for code formatting. These tools ensure consistent code style and catch potential issues early.
 
-### Test Files Location
+### Tools & Configuration
 
-- All unit test files end with `.spec.ts`
-- Located alongside the source files they test
-- Examples:
-  - `src/app/components/search-bar/search-bar.spec.ts`
-  - `src/app/services/api.service.spec.ts`
-  - `src/app/pages/Home/home.spec.ts`
+- **ESLint**: Configured with Angular-specific rules in `eslint.config.js`
+- **Prettier**: Code formatting rules in `.prettierrc.json`
+- **Husky**: Git hooks for automatic formatting on commit
+- **lint-staged**: Runs formatting only on staged files
 
 ### Key Testing Concepts
 
 #### 1. Component Testing
 
 ```typescript
-describe("SearchBar", () => {
+describe('SearchBar', () => {
   let component: SearchBar;
   let fixture: ComponentFixture<SearchBar>;
 
@@ -45,13 +43,13 @@ describe("SearchBar", () => {
     fixture.detectChanges();
   });
 
-  it("should emit search query on valid submission", () => {
-    spyOn(component.searchQuery, "emit");
+  it('should emit search query on valid submission', () => {
+    spyOn(component.searchQuery, 'emit');
 
-    component.formData.patchValue({ searchQuery: "Inception" });
+    component.formData.patchValue({ searchQuery: 'Inception' });
     component.onSubmit();
 
-    expect(component.searchQuery.emit).toHaveBeenCalledWith("Inception");
+    expect(component.searchQuery.emit).toHaveBeenCalledWith('Inception');
   });
 });
 ```
@@ -59,7 +57,7 @@ describe("SearchBar", () => {
 #### 2. Service Testing
 
 ```typescript
-describe("ApiService", () => {
+describe('ApiService', () => {
   let service: ApiService;
   let httpMock: HttpTestingController;
 
@@ -72,11 +70,11 @@ describe("ApiService", () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  it("should make GET request to correct URL", () => {
-    service.get<Movie>("/search?q=test").subscribe();
+  it('should make GET request to correct URL', () => {
+    service.get<Movie>('/search?q=test').subscribe();
 
     const req = httpMock.expectOne(`${environment.apiBaseUrl}/search?q=test`);
-    expect(req.request.method).toBe("GET");
+    expect(req.request.method).toBe('GET');
 
     req.flush(mockApiResponse);
   });
@@ -87,12 +85,12 @@ describe("ApiService", () => {
 
 ```typescript
 // Mocking services
-const apiSpy = jasmine.createSpyObj("ApiService", ["get"]);
-const errorSpy = jasmine.createSpyObj("ErrorHandlerService", ["handleError"]);
+const apiSpy = jasmine.createSpyObj('ApiService', ['get']);
+const errorSpy = jasmine.createSpyObj('ErrorHandlerService', ['handleError']);
 
 // Mocking HTTP responses
 apiService.get.and.returnValue(of(mockApiResponse));
-apiService.get.and.returnValue(throwError(() => new Error("API Error")));
+apiService.get.and.returnValue(throwError(() => new Error('API Error')));
 ```
 
 ### What We Test
@@ -114,14 +112,21 @@ apiService.get.and.returnValue(throwError(() => new Error("API Error")));
 - ✅ Service methods
 - ✅ Dependency injection
 
-#### Current Test Coverage:
+#### Current E2E Test Coverage:
 
-- **App Component**: Basic rendering and routing
-- **SearchBar Component**: Form validation, event emission, snackbar errors
-- **MovieCard Component**: Navigation, image loading states, user interactions
-- **Home Component**: Search functionality, API integration, loading states
-- **ApiService**: HTTP requests, error handling, response transformation
-- **ErrorHandlerService**: Error types, snackbar notifications
+- **🚀 Core User Journey**: Search → Results → Movie Details
+  - User lands on application
+  - User searches for movies (e.g., "Inception")
+  - User waits for results to load
+  - User navigates to movie details
+- **🔄 Alternative Search Scenarios**:
+  - Genre search (e.g., "Action")
+  - Actor search (e.g., "Tom Hanks")
+  - Year search (e.g., "2023")
+- **📱 Mobile User Experience**:
+  - Responsive design testing
+  - Mobile navigation flows
+  - Touch interactions
 
 ## E2E Testing
 
@@ -131,52 +136,49 @@ End-to-End tests use **Cypress** to test the complete user journey through the a
 
 ### Test Files Location
 
-- E2E tests are located in `cypress/e2e/`
+- E2E tests are located in `src/e2e/`
 - Test files end with `.cy.ts`
-- Example: `cypress/e2e/movie-search.cy.ts`
+- Example: `src/e2e/complete-movie-search-flow.cy.ts`
+- Support files: `src/e2e/commands.ts`, `src/e2e/e2e.ts`
 
 ### Key E2E Testing Concepts
 
 #### 1. User Journey Testing
 
 ```typescript
-describe("Search Functionality", () => {
-  it("should allow user to search for movies", () => {
-    cy.visit("/");
+describe('Search Functionality', () => {
+  it('should allow user to search for movies', () => {
+    cy.visit('/');
 
     // Type in search box
-    cy.get("input[matInput]").type("Inception");
+    cy.get('input[matInput]').type('Inception');
 
     // Submit search
     cy.get('button[type="submit"]').click();
 
     // Check loading state
-    cy.get(".loading").should("be.visible");
-    cy.get("mat-spinner").should("be.visible");
+    cy.get('.loading').should('be.visible');
+    cy.get('mat-spinner').should('be.visible');
 
     // Wait for results
-    cy.get(".loading", { timeout: 10000 }).should("not.exist");
+    cy.get('.loading', { timeout: 10000 }).should('not.exist');
   });
 });
 ```
 
-#### 2. API Mocking
+#### 2. Real API Testing
 
 ```typescript
-beforeEach(() => {
-  // Mock API response for consistent testing
-  cy.intercept("GET", "**/search?q=*", {
-    fixture: "movies.json",
-  }).as("searchMovies");
-});
-
-it("should display movie cards when search returns results", () => {
-  cy.get("input[matInput]").type("Test Movie");
+it('should display movie cards when search returns results', () => {
+  cy.get('input[matInput]').type('Inception', { force: true });
   cy.get('button[type="submit"]').click();
 
-  cy.wait("@searchMovies");
+  // Wait for real API response
+  cy.wait(3000);
 
-  cy.get("app-movie-card").should("have.length.greaterThan", 0);
+  cy.get('app-movie-card').should('have.length.greaterThan', 0);
+  cy.get('.movie-title').should('be.visible');
+  cy.get('.view-details-btn').should('be.visible');
 });
 ```
 
@@ -184,13 +186,13 @@ it("should display movie cards when search returns results", () => {
 
 ```typescript
 // cypress/support/commands.ts
-Cypress.Commands.add("searchMovies", (query: string) => {
+Cypress.Commands.add('searchMovies', (query: string) => {
   cy.get('[data-cy="search-input"]').clear().type(query);
   cy.get('[data-cy="search-button"]').click();
 });
 
 // Usage in tests
-cy.searchMovies("Inception");
+cy.searchMovies('Inception');
 ```
 
 ### What We Test
@@ -219,36 +221,44 @@ cy.searchMovies("Inception");
 
 ## Testing Commands
 
-### Unit Tests
+### Linting & Formatting
 
 ```bash
-# Run tests once
-npm run test
+# Check code quality and style
+npm run lint
 
-# Run tests in watch mode
-npm run test:watch
+# Fix linting issues automatically
+npm run lint:fix
 
-# Run tests with coverage report
-npm run test:coverage
+# Format code with Prettier
+npm run format
 
-# Run tests in headless Chrome (CI)
-ng test --watch=false --browsers=ChromeHeadless
+# Check if code is properly formatted
+npm run format:check
 ```
 
 ### E2E Tests
 
 ```bash
-# Run E2E tests in headless mode
+# Run E2E tests in headless mode (uses real API)
 npm run e2e
 
-# Open Cypress Test Runner (interactive)
+# Open Cypress Test Runner (interactive mode)
 npm run e2e:open
 
-# Run E2E tests for CI
-npm run e2e:ci
-
 # Run specific test file
-npx cypress run --spec "cypress/e2e/movie-search.cy.ts"
+npx cypress run --spec "src/e2e/complete-movie-search-flow.cy.ts"
+```
+
+### Git Hooks
+
+```bash
+# Automatic on commit:
+# - Runs lint-staged (Prettier formatting)
+# - Only commits if formatting succeeds
+
+# Manual trigger:
+npx lint-staged
 ```
 
 ### Development Workflow
@@ -271,15 +281,15 @@ npm run e2e:open
 1. **Test Structure (AAA Pattern)**
 
    ```typescript
-   it("should do something", () => {
+   it('should do something', () => {
      // Arrange
-     const input = "test data";
+     const input = 'test data';
 
      // Act
      const result = component.someMethod(input);
 
      // Assert
-     expect(result).toBe("expected output");
+     expect(result).toBe('expected output');
    });
    ```
 
@@ -287,39 +297,39 @@ npm run e2e:open
 
    ```typescript
    // ❌ Bad
-   it("should work", () => {});
+   it('should work', () => {});
 
    // ✅ Good
-   it("should emit search query when form is valid and submitted", () => {});
+   it('should emit search query when form is valid and submitted', () => {});
    ```
 
 3. **Test One Thing at a Time**
 
    ```typescript
    // ❌ Bad - testing multiple things
-   it("should handle form submission", () => {
+   it('should handle form submission', () => {
      // tests validation AND emission AND API call
    });
 
    // ✅ Good - separate tests
-   it("should validate form before submission", () => {});
-   it("should emit search query on valid submission", () => {});
-   it("should call API service with correct parameters", () => {});
+   it('should validate form before submission', () => {});
+   it('should emit search query on valid submission', () => {});
+   it('should call API service with correct parameters', () => {});
    ```
 
 4. **Use Proper Mocking**
 
    ```typescript
    // Mock external dependencies
-   const mockApiService = jasmine.createSpyObj("ApiService", ["get"]);
+   const mockApiService = jasmine.createSpyObj('ApiService', ['get']);
    mockApiService.get.and.returnValue(of(mockData));
    ```
 
 5. **Test Edge Cases**
    ```typescript
-   it("should handle empty search query", () => {});
-   it("should handle API errors", () => {});
-   it("should handle network failures", () => {});
+   it('should handle empty search query', () => {});
+   it('should handle API errors', () => {});
+   it('should handle network failures', () => {});
    ```
 
 ### E2E Testing Best Practices
@@ -339,33 +349,34 @@ npm run e2e:open
 2. **Mock External APIs**
 
    ```typescript
-   cy.intercept("GET", "**/api/**", { fixture: "api-response.json" });
+   cy.intercept('GET', '**/api/**', { fixture: 'api-response.json' });
    ```
 
 3. **Test User Journeys, Not Implementation**
 
    ```typescript
    // ❌ Bad - testing implementation
-   it("should call searchMovies method", () => {});
+   it('should call searchMovies method', () => {});
 
    // ✅ Good - testing user behavior
-   it("should display search results when user searches for movies", () => {});
+   it('should display search results when user searches for movies', () => {});
    ```
 
 4. **Keep Tests Independent**
 
    ```typescript
    beforeEach(() => {
-     cy.visit("/");
+     cy.visit('/');
      // Reset state before each test
    });
    ```
 
 5. **Use Page Object Pattern for Complex Pages**
+
    ```typescript
    class SearchPage {
      visit() {
-       cy.visit("/");
+       cy.visit('/');
      }
 
      searchFor(query: string) {
@@ -391,7 +402,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: '18'
       - run: npm ci
       - run: npm run test:coverage
 
@@ -401,7 +412,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: '18'
       - run: npm ci
       - run: npm start &
       - run: npm run e2e:ci
@@ -429,13 +440,13 @@ beforeEach(async () => {
 ### Testing Forms
 
 ```typescript
-it("should validate required fields", () => {
-  const control = component.formData.get("searchQuery");
+it('should validate required fields', () => {
+  const control = component.formData.get('searchQuery');
 
   expect(control?.valid).toBeFalse();
-  expect(control?.hasError("required")).toBeTrue();
+  expect(control?.hasError('required')).toBeTrue();
 
-  control?.setValue("test");
+  control?.setValue('test');
   expect(control?.valid).toBeTrue();
 });
 ```
@@ -443,18 +454,18 @@ it("should validate required fields", () => {
 ### Testing HTTP Requests
 
 ```typescript
-it("should handle HTTP errors", () => {
-  const errorResponse = { status: 404, statusText: "Not Found" };
+it('should handle HTTP errors', () => {
+  const errorResponse = { status: 404, statusText: 'Not Found' };
 
-  service.get("/api/movies").subscribe({
-    next: () => fail("Expected an error"),
-    error: (error) => {
+  service.get('/api/movies').subscribe({
+    next: () => fail('Expected an error'),
+    error: error => {
       expect(errorHandlerSpy.handleError).toHaveBeenCalled();
     },
   });
 
-  const req = httpMock.expectOne("/api/movies");
-  req.flush("Not Found", errorResponse);
+  const req = httpMock.expectOne('/api/movies');
+  req.flush('Not Found', errorResponse);
 });
 ```
 
@@ -464,15 +475,15 @@ it("should handle HTTP errors", () => {
 
 ```typescript
 // Add console.log for debugging
-it("should do something", () => {
-  console.log("Component state:", component);
-  console.log("Form value:", component.formData.value);
+it('should do something', () => {
+  console.log('Component state:', component);
+  console.log('Form value:', component.formData.value);
 
   // Your test code
 });
 
 // Use debugger
-it("should do something", () => {
+it('should do something', () => {
   debugger; // Will pause execution in browser dev tools
   // Your test code
 });
@@ -482,9 +493,9 @@ it("should do something", () => {
 
 ```typescript
 // Add screenshots
-cy.screenshot("before-action");
-cy.get("button").click();
-cy.screenshot("after-action");
+cy.screenshot('before-action');
+cy.get('button').click();
+cy.screenshot('after-action');
 
 // Pause test execution
 cy.pause(); // Opens Cypress runner and pauses
