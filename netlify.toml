@@ -1,21 +1,22 @@
 [build]
   publish = "dist/search-movies/browser"
-  command = "npm run build:full"
+  command = "npm run build:netlify-e2e"
 
 # Environment variables
 [build.environment]
   NODE_VERSION = "22"
   NPM_FLAGS = "--no-optional"
+  CYPRESS_CACHE_FOLDER = "/opt/buildhome/.cache/Cypress"
 
 # Production context (main branch)
 [context.production]
-  command = "npm run build:full"
+  command = "npm run build:netlify-e2e"
 
-# Deploy previews (pull requests)
+# Deploy previews (pull requests)  
 [context.deploy-preview]
-  command = "npm run build:full"
+  command = "npm run build:netlify-e2e"
 
-# Branch deploys
+# Branch deploys (faster builds without E2E)
 [context.branch-deploy]
   command = "npm run build:netlify"
 
