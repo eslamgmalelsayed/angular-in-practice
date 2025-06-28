@@ -5,7 +5,6 @@
 # Environment variables
 [build.environment]
   NODE_VERSION = "22"
-  NPM_FLAGS = "--no-optional"
 
 # Production context (main branch)
 [context.production]
