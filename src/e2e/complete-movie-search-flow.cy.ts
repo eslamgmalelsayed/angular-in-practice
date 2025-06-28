@@ -132,7 +132,7 @@ describe('🎬 Movie Search User Flow', () => {
       { query: '2023', description: 'Year search' },
     ];
 
-    testScenarios.forEach((scenario) => {
+    testScenarios.forEach(scenario => {
       cy.log(`Testing: ${scenario.description} - "${scenario.query}"`);
 
       // Search for movie

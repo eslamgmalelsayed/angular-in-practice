@@ -10,7 +10,7 @@ import type { Movie } from '@/app/models/movie.model';
 
 @Component({
   selector: 'app-movie-card',
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule],
+  imports: [CommonModulee, MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './movie-card.html',
   styleUrl: './movie-card.scss',
 })
