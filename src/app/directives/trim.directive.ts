@@ -1,17 +1,18 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject } from '@angular/core';
 
 @Directive({
   selector: '[appTrim]',
 })
 export class TrimDirective {
-  constructor(private el: ElementRef) {}
+  private el = inject(ElementRef);
 
-  @HostListener('blur', ['$event']) onBlur(event: any) {
-    const value = event.target.value;
+  @HostListener('blur', ['$event']) onBlur(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
     if (value) {
-      event.target.value = value.trim();
+      target.value = value.trim();
       // Trigger input event to update form control
-      event.target.dispatchEvent(new Event('input'));
+      target.dispatchEvent(new Event('input'));
     }
   }
 }

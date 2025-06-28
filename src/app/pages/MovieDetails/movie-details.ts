@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -13,9 +13,10 @@ import type { Movie } from '@/app/models/movie.model';
   styleUrl: './movie-details.scss',
 })
 export class MovieDetails implements OnInit {
-  movie: Movie | null = null;
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  movie: Movie | null = null;
 
   ngOnInit(): void {
     // Get the movie object from navigation state

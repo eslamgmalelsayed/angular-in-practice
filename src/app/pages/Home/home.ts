@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // Material
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -19,11 +19,11 @@ import { API_ENDPOINTS } from '@/app/constants/api-endpoints';
   styleUrl: './home.scss',
 })
 export class Home {
+  private apiService = inject(ApiService);
+
   // Data
   movies: Movie[] = [];
   isLoading = false;
-
-  constructor(private apiService: ApiService) {}
 
   // Methods
   onMovieSearch(query: string) {

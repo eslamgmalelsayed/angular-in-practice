@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, throwError } from 'rxjs';
@@ -7,7 +7,7 @@ import { Observable, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class ErrorHandlerService {
-  constructor(private snackBar: MatSnackBar) {}
+  private snackBar = inject(MatSnackBar);
 
   handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unexpected error occurred';

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 // Material
@@ -15,12 +15,12 @@ import type { Movie } from '@/app/models/movie.model';
   styleUrl: './movie-card.scss',
 })
 export class MovieCard {
+  private router = inject(Router);
+
   @Input() movie!: Movie;
 
   imageLoading = true;
   imageError = false;
-
-  constructor(private router: Router) {}
 
   onCardClick(): void {
     this.router.navigate(['/movie', this.movie['#IMDB_ID']], {

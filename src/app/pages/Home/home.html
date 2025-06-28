@@ -1,5 +1,5 @@
 <main class="main">
-  <app-search-bar (onSearch)="onMovieSearch($event)"></app-search-bar>
+  <app-search-bar (searchQuery)="onMovieSearch($event)"></app-search-bar>
 
   <!-- Loading state with spinner -->
   <div *ngIf="isLoading" class="loading">

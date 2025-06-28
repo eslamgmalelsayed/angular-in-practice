@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -12,24 +12,23 @@ import { ErrorHandlerService } from './error-handler.service';
   providedIn: 'root',
 })
 export class ApiService {
+  private http = inject(HttpClient);
+  private errorHandler = inject(ErrorHandlerService);
   private baseUrl = environment.apiBaseUrl;
 
-  constructor(
-    private http: HttpClient,
-    private errorHandler: ErrorHandlerService
-  ) {}
-
-  get<T>(endpoint: string = ''): Observable<ApiResponse<T>> {
+  get<T>(endpoint = ''): Observable<ApiResponse<T>> {
     return this.http
-      .get<{ ok: boolean; description: T[]; error_code: number }>(
-        `${this.baseUrl}${endpoint}`
-      )
+      .get<{
+        ok: boolean;
+        description: T[];
+        error_code: number;
+      }>(`${this.baseUrl}${endpoint}`)
       .pipe(
-        map((response) => ({
+        map(response => ({
           ...response,
           data: response.description,
         })),
-        catchError((error) => this.errorHandler.handleError(error))
+        catchError(error => this.errorHandler.handleError(error))
       );
   }
 }

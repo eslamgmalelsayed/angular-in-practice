@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -26,9 +26,11 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrl: './search-bar.scss',
 })
 export class SearchBar implements OnInit {
-  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {}
+  private fb = inject(FormBuilder);
+  private snackBar = inject(MatSnackBar);
+
   // Emitters
-  @Output() onSearch = new EventEmitter<string>();
+  @Output() searchQuery = new EventEmitter<string>();
 
   // Data
   label = 'Search for movies...';
@@ -51,6 +53,6 @@ export class SearchBar implements OnInit {
       return;
     }
 
-    this.onSearch.emit(query);
+    this.searchQuery.emit(query);
   }
 }
