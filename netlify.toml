@@ -1,6 +1,6 @@
 [build]
   publish = "dist/search-movies/browser"
-  command = "npm run build:netlify"
+  command = "npm run build:full"
 
 # Environment variables
 [build.environment]
@@ -9,11 +9,11 @@
 
 # Production context (main branch)
 [context.production]
-  command = "npm run build:netlify"
+  command = "npm run build:full"
 
 # Deploy previews (pull requests)
 [context.deploy-preview]
-  command = "npm run build:netlify"
+  command = "npm run build:full"
 
 # Branch deploys
 [context.branch-deploy]
