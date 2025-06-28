@@ -1,6 +1,38 @@
 [build]
   publish = "dist/search-movies/browser"
-  command = "npm run build"
+  command = "npm run build:netlify"
+
+# Environment variables
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_FLAGS = "--no-optional"
+
+# Production context (main branch)
+[context.production]
+  command = "npm run build:netlify"
+
+# Deploy previews (pull requests)
+[context.deploy-preview]
+  command = "npm run build:netlify"
+
+# Branch deploys
+[context.branch-deploy]
+  command = "npm run build:netlify"
 
 [[plugins]]
-  package = "@netlify/angular-runtime" 
+  package = "@netlify/angular-runtime"
+
+# Build optimization
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true 

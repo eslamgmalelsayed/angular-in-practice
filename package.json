@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:netlify": "npm run lint && npm run format:check && npm run build",
+    "build:full": "npm run lint && npm run format:check && npm run e2e && npm run build",
     "watch": "ng build --watch --configuration development",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",

@@ -25,13 +25,13 @@
     <div class="overlay"></div>
 
     <!-- Year badge -->
-    <div class="year-badge">{{ movie["#YEAR"] }}</div>
+    <div class="year-badge">{{ movie['#YEAR'] }}</div>
   </div>
 
   <div class="card-content">
-    <h3 class="movie-title">{{ movie["#TITLE"] }}</h3>
-    <p class="movie-actors">{{ movie["#ACTORS"] }}</p>
-    <p class="movie-rank" *ngIf="movie['#RANK']">Rank #{{ movie["#RANK"] }}</p>
+    <h3 class="movie-title">{{ movie['#TITLE'] }}</h3>
+    <p class="movie-actors">{{ movie['#ACTORS'] }}</p>
+    <p class="movie-rank" *ngIf="movie['#RANK']">Rank #{{ movie['#RANK'] }}</p>
   </div>
 
   <mat-card-actions class="card-actions">

@@ -10,6 +10,7 @@
 
 /// <reference types="cypress" />
 
+/* eslint-disable @typescript-eslint/no-namespace */
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -27,6 +28,7 @@ declare global {
     }
   }
 }
+/* eslint-enable @typescript-eslint/no-namespace */
 
 Cypress.Commands.add('searchMovies', (query: string) => {
   cy.get('[data-cy="search-input"]').clear().type(query);

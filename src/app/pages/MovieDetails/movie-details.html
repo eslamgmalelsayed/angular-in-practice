@@ -2,7 +2,7 @@
   <div class="details-card">
     <div class="details-header">
       <span class="movie-year-actors">
-        {{ movie["#YEAR"] }} • {{ movie["#ACTORS"] }}
+        {{ movie['#YEAR'] }} • {{ movie['#ACTORS'] }}
       </span>
     </div>
     <div class="details-content">
@@ -14,18 +14,18 @@
         />
       </div>
       <div class="info-col">
-        <h2 class="movie-title">{{ movie["#TITLE"] }}</h2>
+        <h2 class="movie-title">{{ movie['#TITLE'] }}</h2>
         <div class="info-row">
           <span class="label">Alternative Title:</span>
-          <span>{{ movie["#AKA"] }}</span>
+          <span>{{ movie['#AKA'] }}</span>
         </div>
         <div class="info-row">
           <span class="label">IMDB Rank:</span>
-          <span>#{{ movie["#RANK"] }}</span>
+          <span>#{{ movie['#RANK'] }}</span>
         </div>
         <div class="info-row">
           <span class="label">Cast:</span>
-          <span>{{ movie["#ACTORS"] }}</span>
+          <span>{{ movie['#ACTORS'] }}</span>
         </div>
         <div class="info-row">
           <span class="label">Dimensions:</span>

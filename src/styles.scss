@@ -5,13 +5,14 @@
   box-sizing: border-box;
 }
 
-html, body { 
-  height: 100%; 
+html,
+body {
+  height: 100%;
 }
 
-body { 
-  margin: 0; 
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
   background-color: #212121; /* Dark blue background */
   color: #ffffff; /* White text */
 }
@@ -21,31 +22,31 @@ body {
   .mat-mdc-text-field-wrapper {
     background-color: rgba(255, 255, 255, 0.05);
   }
-  
+
   .mdc-text-field--outlined .mdc-notched-outline__leading,
   .mdc-text-field--outlined .mdc-notched-outline__notch,
   .mdc-text-field--outlined .mdc-notched-outline__trailing {
     border-color: rgba(255, 255, 255, 0.3) !important;
   }
-  
+
   .mdc-text-field--focused .mdc-notched-outline__leading,
   .mdc-text-field--focused .mdc-notched-outline__notch,
   .mdc-text-field--focused .mdc-notched-outline__trailing {
     border-color: #3f51b5 !important;
   }
-  
+
   .mdc-text-field--outlined .mdc-text-field__input {
     color: #ffffff !important;
   }
-  
+
   .mat-mdc-form-field-label {
     color: rgba(255, 255, 255, 0.7) !important;
   }
-  
+
   .mat-mdc-form-field-label.mdc-floating-label--float-above {
     color: #3f51b5 !important;
   }
-  
+
   .mat-icon {
     color: rgba(255, 255, 255, 0.7) !important;
   }
