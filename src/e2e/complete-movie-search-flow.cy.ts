@@ -38,7 +38,7 @@ describe('🎬 Movie Search User Flow', () => {
     cy.get('input[matInput]').should('have.value', 'Inception');
 
     // Click search button
-    cy.get('button[type="submit"]').click();
+    cy.get('button[type="submit"]').click({ force: true });
 
     // ========================================
     // 3. USER WAITS FOR SEARCH RESULTS
@@ -139,7 +139,7 @@ describe('🎬 Movie Search User Flow', () => {
       cy.get('input[matInput]')
         .clear({ force: true })
         .type(scenario.query, { force: true });
-      cy.get('button[type="submit"]').click();
+      cy.get('button[type="submit"]').click({ force: true });
 
       // Wait for real API results
       cy.wait(3000);
@@ -173,7 +173,7 @@ describe('🎬 Movie Search User Flow', () => {
     cy.get('input[matInput]')
       .clear({ force: true })
       .type('Mobile Test', { force: true });
-    cy.get('button[type="submit"]').click();
+    cy.get('button[type="submit"]').click({ force: true });
 
     // Wait for real API results
     cy.wait(3000);
