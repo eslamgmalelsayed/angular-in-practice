@@ -1,24 +1,23 @@
 [build]
   publish = "dist/search-movies/browser"
-  command = "npm run build:netlify-e2e"
+  command = "npm run build"
 
 # Environment variables
 [build.environment]
   NODE_VERSION = "22"
   NPM_FLAGS = "--no-optional"
-  CYPRESS_CACHE_FOLDER = "/opt/buildhome/.cache/Cypress"
 
 # Production context (main branch)
 [context.production]
-  command = "npm run build:netlify-e2e"
+  command = "npm run build"
 
-# Deploy previews (pull requests)  
+# Deploy previews (pull requests)
 [context.deploy-preview]
-  command = "npm run build:netlify-e2e"
+  command = "npm run build"
 
-# Branch deploys (faster builds without E2E)
+# Branch deploys
 [context.branch-deploy]
-  command = "npm run build:netlify"
+  command = "npm run build"
 
 [[plugins]]
   package = "@netlify/angular-runtime"
